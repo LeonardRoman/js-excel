@@ -11,7 +11,22 @@ const isProd = !isDev
 // Наименование собранных файлов
 const filename = ext => isDev ? `[name].${ext}` : `bundle.[hash].${ext}`
 
-// Настройки
+// Настройки сборки JS
+const jsLoaders = () => {
+  const loaders = [
+    {
+      loader: 'babel-loader',
+      options: {
+        presets: ['@babel/preset-env']
+      }
+    }]
+  if (isDev) {
+    loaders.push('eslint-loader')
+  }
+  return loaders
+}
+
+// Все настройки
 module.exports = {
   // Папка файлов для разработки
   context: path.resolve(__dirname, 'src'),
@@ -74,12 +89,7 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env']
-          }
-        }
+        use: jsLoaders()
       }
     ],
   },
