@@ -1,2 +1,3 @@
-console.log('Start')
+import './scss/index.scss'
 
+console.log('Start')
